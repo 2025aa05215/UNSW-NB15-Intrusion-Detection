@@ -109,36 +109,41 @@ if uploaded_file is not None:
         mcc = matthews_corrcoef(y_test, y_pred)
 
         # Display Metrics
-        st.subheader("📊 Evaluation Metrics")
-
-        col1, col2, col3 = st.columns(3)
-        col4, col5, col6 = st.columns(3)
-
-        col1.metric("Accuracy", f"{acc:.4f}")
-        col2.metric("AUC", f"{auc:.4f}")
-        col3.metric("Precision", f"{prec:.4f}")
-        col4.metric("Recall", f"{rec:.4f}")
-        col5.metric("F1 Score", f"{f1:.4f}")
-        col6.metric("MCC", f"{mcc:.4f}")
+        st.markdown("## 📊 Evaluation Metrics")
+        
+        metric_cols = st.columns(6)
+        
+        metric_cols[0].metric("Accuracy", f"{acc:.4f}")
+        metric_cols[1].metric("AUC", f"{auc:.4f}")
+        metric_cols[2].metric("Precision", f"{prec:.4f}")
+        metric_cols[3].metric("Recall", f"{rec:.4f}")
+        metric_cols[4].metric("F1 Score", f"{f1:.4f}")
+        metric_cols[5].metric("MCC", f"{mcc:.4f}")
 
         # Confusion Matrix
-        st.subheader("🔢 Confusion Matrix")
-
+        st.markdown("## 🔢 Confusion Matrix")
+        
         cm = confusion_matrix(y_test, y_pred)
-
-        fig, ax = plt.subplots(figsize=(5, 4))
+        
+        fig, ax = plt.subplots(figsize=(6, 5))
+        
         sns.heatmap(
             cm,
             annot=True,
             fmt="d",
             cmap="Blues",
             cbar=False,
+            xticklabels=["Normal (0)", "Attack (1)"],
+            yticklabels=["Normal (0)", "Attack (1)"],
             ax=ax
         )
-        ax.set_xlabel("Predicted")
-        ax.set_ylabel("Actual")
-        ax.set_title(f"{selected_model_name} Confusion Matrix")
-
+        
+        ax.set_xlabel("Predicted Label", fontsize=12)
+        ax.set_ylabel("Actual Label", fontsize=12)
+        ax.set_title(f"{selected_model_name} Confusion Matrix", fontsize=14)
+        
+        plt.tight_layout()
+        
         st.pyplot(fig)
 
     except Exception as e:
