@@ -118,6 +118,8 @@ File sizes were verified to meet deployment constraints.
 ## 🌐 Streamlit Web Application
 
 The project includes a fully interactive Streamlit app.
+🚀 [Live Streamlit App](https://unsw-nb15-intrusion-detection.streamlit.app/)
+
 
 ### Features
 
