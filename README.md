@@ -1,8 +1,11 @@
 # 🔐 UNSW-NB15 Intrusion Detection System
+ 
+Dataset: [**UNSW-NB15**](https://www.kaggle.com/datasets/dhoogla/unswnb15/)<br>
+Task: **Binary Classification (Normal vs Attack)** 
 
-Binary Classification: **Normal vs Attack**  
-Dataset: **UNSW-NB15**  
-Assignment: ML Assignment 2  
+Name: **Ayan Ahmad** <br>
+BITS ID: **2025AA05215** <br>
+Assignment: ML Assignment 2  <br>
 
 ---
 
