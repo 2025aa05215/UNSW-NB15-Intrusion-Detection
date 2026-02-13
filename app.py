@@ -145,6 +145,25 @@ if uploaded_file is not None:
         plt.tight_layout()
         
         st.pyplot(fig)
+        
+        # ROC Curve
+        from sklearn.metrics import roc_curve
+        
+        st.markdown("## 📈 ROC Curve")
+        
+        fpr, tpr, _ = roc_curve(y_test, y_proba)
+        
+        fig2, ax2 = plt.subplots(figsize=(6, 5))
+        ax2.plot(fpr, tpr, label=f"AUC = {auc:.4f}")
+        ax2.plot([0, 1], [0, 1], linestyle="--")
+        
+        ax2.set_xlabel("False Positive Rate")
+        ax2.set_ylabel("True Positive Rate")
+        ax2.set_title("ROC Curve")
+        ax2.legend()
+        
+        plt.tight_layout()
+        st.pyplot(fig2)
 
     except Exception as e:
         st.error(f"Error: {e}")
