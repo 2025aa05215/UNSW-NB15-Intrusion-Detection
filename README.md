@@ -85,6 +85,15 @@ Accuracy alone is not reliable in imbalanced datasets.
 
 Based on the final run:
 
+| Model | Accuracy | AUC | Precision | Recall | F1 | MCC |
+|-------|----------|------|----------|--------|------|------|
+| XGBoost | 0.9383 | 0.9891 | 0.9540 | 0.9493 | 0.9516 | 0.8666 |
+| Decision Tree | 0.9326 | 0.9737 | 0.9590 | 0.9344 | 0.9465 | 0.8558 |
+| Random Forest | 0.9315 | 0.9872 | 0.9293 | 0.9663 | 0.9474 | 0.8505 |
+| KNN | 0.8965 | 0.9631 | 0.9149 | 0.9240 | 0.9194 | 0.7749 |
+| Logistic Regression | 0.8709 | 0.9486 | 0.8570 | 0.9579 | 0.9046 | 0.7175 |
+| Naive Bayes | 0.5052 | 0.6669 | 0.9996 | 0.2258 | 0.3684 | 0.3083 |
+
 > **XGBoost** achieved the strongest overall performance (highest MCC and AUC).
 
 Example confusion matrix from training:
@@ -95,6 +104,17 @@ Example confusion matrix from training:
 | Actual Attack | 1670            | 31265           |
 
 The model achieves strong recall while maintaining high precision — important for intrusion detection systems.
+
+## 🔍 Model Performance Observations
+
+| Model | Observation about Model Performance |
+|-------|-------------------------------------|
+| Logistic Regression | Achieved high recall (0.9579) but lower precision (0.8570), indicating more false positives. Performs reasonably well but underfits compared to ensemble methods. Suitable as a strong linear baseline. |
+| Decision Tree | High precision (0.9590) and strong overall balance. Slightly lower recall than Random Forest. Prone to overfitting but performs well on structured tabular data. |
+| KNN | Moderate performance across all metrics. Sensitive to feature scaling and high dimensionality. Computationally expensive at inference time. |
+| Naive Bayes | Extremely high precision (0.9996) but very poor recall (0.2258). Fails to detect many attack cases. Strong class bias assumption limits performance on complex data. |
+| Random Forest | Excellent recall (0.9663) and strong F1 (0.9474). Good bias–variance tradeoff. Robust and stable ensemble performer. |
+| XGBoost | Best overall model. Highest MCC (0.8666) and AUC (0.9891). Strong balance between precision and recall. Most suitable for deployment in intrusion detection setting. |
 
 ---
 
