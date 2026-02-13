@@ -52,7 +52,7 @@ if os.path.exists("test_sample.csv"):
         )
 
 # Model Selection
-MODEL_PATH = "models"
+MODEL_PATH = "model"
 
 model_files = {
     "Logistic Regression": "logistic_regression.pkl",
