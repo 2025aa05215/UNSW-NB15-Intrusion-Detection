@@ -120,50 +120,57 @@ if uploaded_file is not None:
         metric_cols[4].metric("F1 Score", f"{f1:.4f}")
         metric_cols[5].metric("MCC", f"{mcc:.4f}")
 
-        # Confusion Matrix
-        st.markdown("## 🔢 Confusion Matrix")
-        
-        cm = confusion_matrix(y_test, y_pred)
-        
-        fig, ax = plt.subplots(figsize=(6, 5))
-        
-        sns.heatmap(
-            cm,
-            annot=True,
-            fmt="d",
-            cmap="Blues",
-            cbar=False,
-            xticklabels=["Normal (0)", "Attack (1)"],
-            yticklabels=["Normal (0)", "Attack (1)"],
-            ax=ax
-        )
-        
-        ax.set_xlabel("Predicted Label", fontsize=12)
-        ax.set_ylabel("Actual Label", fontsize=12)
-        ax.set_title(f"{selected_model_name} Confusion Matrix", fontsize=14)
-        
-        plt.tight_layout()
-        
-        st.pyplot(fig)
-        
-        # ROC Curve
+        # Graphs
         from sklearn.metrics import roc_curve
         
-        st.markdown("## 📈 ROC Curve")
+        st.markdown("## 🔍 Model Evaluation Visuals")
         
-        fpr, tpr, _ = roc_curve(y_test, y_proba)
+        col1, col2 = st.columns(2)
         
-        fig2, ax2 = plt.subplots(figsize=(6, 5))
-        ax2.plot(fpr, tpr, label=f"AUC = {auc:.4f}")
-        ax2.plot([0, 1], [0, 1], linestyle="--")
+        # Confusion Matrix
+        with col1:
+            st.markdown("### Confusion Matrix")
         
-        ax2.set_xlabel("False Positive Rate")
-        ax2.set_ylabel("True Positive Rate")
-        ax2.set_title("ROC Curve")
-        ax2.legend()
+            cm = confusion_matrix(y_test, y_pred)
         
-        plt.tight_layout()
-        st.pyplot(fig2)
+            fig_cm, ax_cm = plt.subplots(figsize=(5, 4))
+            sns.heatmap(
+                cm,
+                annot=True,
+                fmt="d",
+                cmap="Blues",
+                cbar=False,
+                xticklabels=["Normal (0)", "Attack (1)"],
+                yticklabels=["Normal (0)", "Attack (1)"],
+                ax=ax_cm
+            )
+        
+            ax_cm.set_xlabel("Predicted Label")
+            ax_cm.set_ylabel("Actual Label")
+            ax_cm.set_title(selected_model_name)
+        
+            plt.tight_layout()
+            st.pyplot(fig_cm)
+        
+        
+        # ROC Curve
+        with col2:
+            st.markdown("### ROC Curve")
+        
+            fpr, tpr, _ = roc_curve(y_test, y_proba)
+        
+            fig_roc, ax_roc = plt.subplots(figsize=(5, 4))
+            ax_roc.plot(fpr, tpr, label=f"AUC = {auc:.4f}")
+            ax_roc.plot([0, 1], [0, 1], linestyle="--")
+        
+            ax_roc.set_xlabel("False Positive Rate")
+            ax_roc.set_ylabel("True Positive Rate")
+            ax_roc.set_title(selected_model_name)
+            ax_roc.legend()
+        
+            plt.tight_layout()
+            st.pyplot(fig_roc)
+
 
     except Exception as e:
         st.error(f"Error: {e}")
