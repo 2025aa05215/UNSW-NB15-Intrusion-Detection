@@ -1,1 +1,171 @@
-# UNSW-NB15-Intrusion-Detection
+# 🔐 UNSW-NB15 Intrusion Detection System
+
+Binary Classification: **Normal vs Attack**  
+Dataset: **UNSW-NB15**  
+Assignment: ML Assignment 2  
+
+---
+
+## 📌 Overview
+
+This project implements multiple machine learning models to detect network intrusions using the UNSW-NB15 cybersecurity dataset.
+
+The goal is simple:
+
+- `0 → Normal`
+- `1 → Attack`
+
+The pipeline covers the full end-to-end ML workflow:
+
+- Data preprocessing  
+- Model training  
+- Model evaluation & comparison  
+- Model serialization  
+- Streamlit deployment  
+
+This is not just model training — it includes real deployment and evaluation.
+
+---
+
+## 📊 Dataset Information
+
+**Total Samples:** 257,673  
+**Total Features:** 35 (after preprocessing)
+
+### Class Distribution
+
+| Label | Count |
+|-------|-------|
+| Attack (1) | 164,673 |
+| Normal (0) | 93,000 |
+
+The dataset is moderately imbalanced, so evaluation was not based on accuracy alone.
+
+---
+
+## 🧠 Models Implemented
+
+The following classifiers were trained:
+
+- Logistic Regression  
+- Decision Tree  
+- K-Nearest Neighbors (KNN)  
+- Naive Bayes  
+- Random Forest  
+- XGBoost  
+
+All models were trained using preprocessing pipelines that include:
+
+- StandardScaler (for numerical features)  
+- OneHotEncoder (for categorical features)  
+
+---
+
+## 📈 Evaluation Metrics
+
+Models were compared using:
+
+- **Accuracy**
+- **AUC (ROC)**
+- **Precision**
+- **Recall**
+- **F1 Score**
+- **MCC (Matthews Correlation Coefficient)**
+
+### Why MCC?
+
+Intrusion detection is a security problem with class imbalance.  
+**MCC** was used as the primary metric because it evaluates TP, TN, FP, and FN together in a balanced way.
+
+Accuracy alone is not reliable in imbalanced datasets.
+
+---
+
+## 🏆 Best Performing Model
+
+Based on the final run:
+
+> **XGBoost** achieved the strongest overall performance (highest MCC and AUC).
+
+Example confusion matrix from training:
+
+|               | Predicted Normal | Predicted Attack |
+|---------------|-----------------|-----------------|
+| Actual Normal | 17092           | 1508            |
+| Actual Attack | 1670            | 31265           |
+
+The model achieves strong recall while maintaining high precision — important for intrusion detection systems.
+
+---
+
+## 💾 Saved Model Files
+
+All trained models are serialized as `.pkl` files inside the `models/` directory.
+
+| Model | Size |
+|-------|------|
+| xgboost.pkl | 0.30 MB |
+| random_forest.pkl | 3.84 MB |
+| decision_tree.pkl | 0.43 MB |
+| knn.pkl | 20.03 MB |
+| logistic_regression.pkl | 0.01 MB |
+| naive_bayes.pkl | 0.01 MB |
+
+File sizes were verified to meet deployment constraints.
+
+---
+
+## 🌐 Streamlit Web Application
+
+The project includes a fully interactive Streamlit app.
+
+### Features
+
+- Model selection dropdown  
+- Upload custom test CSV  
+- Automatic metric computation  
+- Confusion matrix visualization  
+- ROC curve visualization  
+- Downloadable sample test dataset  
+
+Users can upload a CSV file containing a `label` column to evaluate performance instantly.
+
+---
+
+## 📂 Repository Structure
+
+UNSW-NB15-Intrusion-Detection-ML/<br>
+&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;├── app.py<br>
+&nbsp;&nbsp;├── requirements.txt<br>
+&nbsp;&nbsp;├── README.md<br>
+&nbsp;&nbsp;├── model_results.csv<br>
+&nbsp;&nbsp;├── test_sample.csv<br>
+&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;└── models/<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── logistic_regression.pkl<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── decision_tree.pkl<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── knn.pkl<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── naive_bayes.pkl<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── random_forest.pkl<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── xgboost.pkl<br>
+
+---
+
+## ⚙️ Requirements
+
+Main dependencies:
+
+- streamlit  
+- pandas  
+- numpy  
+- scikit-learn==1.6.1  
+- xgboost==3.1.3  
+- matplotlib  
+- seaborn  
+- joblib  
+
+Install locally with:
+
+```bash
+pip install -r requirements.txt
