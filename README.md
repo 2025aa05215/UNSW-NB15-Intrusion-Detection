@@ -164,7 +164,7 @@ UNSW-NB15-Intrusion-Detection-ML/<br>
 &nbsp;&nbsp;├── model_results.csv<br>
 &nbsp;&nbsp;├── test_sample.csv<br>
 &nbsp;&nbsp;│<br>
-&nbsp;&nbsp;└── models/<br>
+&nbsp;&nbsp;└── model/<br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── logistic_regression.pkl<br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── decision_tree.pkl<br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── knn.pkl<br>
