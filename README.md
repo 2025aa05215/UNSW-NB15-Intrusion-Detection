@@ -33,7 +33,7 @@ For this assignment, six different classification models were trained on the sam
 ## 2️⃣ Dataset Information
 
 **Dataset Name:** UNSW-NB15  
-**Dataset Link:** [**Kaggle**](https://www.kaggle.com/datasets/dhoogla/unswnb15/)
+**Dataset Link:** [**Kaggle**](https://www.kaggle.com/datasets/dhoogla/unswnb15/)<br>
 **Total Samples:** 257,673  
 **Total Features:** 35 (after removing the multi-class column)
 
