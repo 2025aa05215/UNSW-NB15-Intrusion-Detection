@@ -9,31 +9,23 @@ Assignment: ML Assignment 2  <br>
 
 ---
 
-## 1️⃣ Overview
+## 1️⃣ Problem Statement
 
-In this project, I used the UNSW-NB15 cybersecurity dataset to build a network intrusion detection system using multiple machine learning models.
+The objective of this project is to build a machine learning based intrusion detection system using the UNSW-NB15 dataset.
 
-The task is a binary classification problem:
+This is a binary classification task:
 
-- **0 → Normal**
-- **1 → Attack**
+- 0 → Normal Network Traffic  
+- 1 → Attack Traffic  
 
-The workflow followed was end-to-end:
-
-- Data preprocessing  
-- Training multiple classification models  
-- Evaluating and comparing their performance  
-- Saving the trained models  
-- Deploying the final interface using Streamlit  
-
-For this assignment, six different classification models were trained on the same dataset, compared using metrics such as Accuracy, AUC, F1-score, and MCC, and deployed through a Streamlit app so they can be tested on new data.
+The goal is to compare multiple classification models and determine which performs best for detecting malicious network activity.
 
 ---
 
-## 2️⃣ Dataset Information
+## 2️⃣ Dataset Description
 
 **Dataset Name:** UNSW-NB15  
-**Dataset Link:** [**Kaggle**](https://www.kaggle.com/datasets/dhoogla/unswnb15/)<br>
+**Source:** Kaggle  
 **Total Samples:** 257,673  
 **Total Features:** 35 (after removing the multi-class column)
 
@@ -44,73 +36,53 @@ For this assignment, six different classification models were trained on the sam
 | Attack (1) | 164,673 |
 | Normal (0) | 93,000 |
 
-The dataset contains more attack samples than normal samples, so accuracy alone is not enough to judge performance. Along with accuracy, AUC, F1-score, and MCC were also used to better understand how well the models handle both classes.
+The dataset contains more attack samples than normal samples.  
+Because of this imbalance, accuracy alone is not sufficient for evaluation.
 
 ---
 
-## 3️⃣ Models Implemented
+## 3️⃣ Models Used
 
-The following classification models were trained on the same dataset for fair comparison:
+The following six models were implemented on the same dataset:
 
-- Logistic Regression  
-- Decision Tree  
-- K-Nearest Neighbors (KNN)  
-- Naive Bayes  
-- Random Forest (Ensemble)  
-- XGBoost (Ensemble)  
+1. Logistic Regression  
+2. Decision Tree Classifier  
+3. K-Nearest Neighbor (KNN)  
+4. Naive Bayes (Gaussian)  
+5. Random Forest (Ensemble)  
+6. XGBoost (Ensemble)  
 
-Each model was trained using the same train–test split and evaluated using the same metrics.
+All models were trained using:
 
-### Preprocessing Pipeline
-
-Before training the models, a preprocessing pipeline was applied:
-
-- **StandardScaler** for numerical features  
-- **OneHotEncoder** for categorical features  
-
-This preprocessing step was included inside a `Pipeline` along with each classifier so that identical transformations are applied during both training and testing.
+- StandardScaler for numerical features  
+- OneHotEncoder for categorical features  
+- Stratified train-test split  
 
 ---
 
-## 4️⃣ Evaluation Metrics
+## 4️⃣ Model Performance Comparison 📊
 
-Each model was evaluated using:
-
-- Accuracy  
-- AUC (ROC Score)  
-- Precision  
-- Recall  
-- F1 Score  
-- Matthews Correlation Coefficient (MCC)  
-
-### Why MCC?
-
-Since this is an intrusion detection problem, the dataset is not perfectly balanced. There are more attack samples than normal ones, so accuracy alone can be misleading.
-
-MCC takes into account all four outcomes of the confusion matrix (TP, TN, FP, FN) and provides a more balanced performance measure, especially when classes are uneven.
-
-For this reason, accuracy alone was not used to compare models.
-
----
-
-## 5️⃣ Model Performance Comparison 📊
-
-| Model | Accuracy | AUC | Precision | Recall | F1 | MCC |
-|--------|----------|------|-----------|--------|------|------|
-| XGBoost | 0.9383 | 0.9891 | 0.9540 | 0.9493 | 0.9516 | 0.8666 |
-| Decision Tree | 0.9326 | 0.9737 | 0.9590 | 0.9344 | 0.9465 | 0.8558 |
-| Random Forest | 0.9315 | 0.9872 | 0.9293 | 0.9663 | 0.9474 | 0.8505 |
-| KNN | 0.8895 | 0.9576 | 0.9074 | 0.9210 | 0.9142 | 0.7591 |
+| ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
+|---------------|----------|------|-----------|--------|------|------|
 | Logistic Regression | 0.8713 | 0.9487 | 0.8579 | 0.9572 | 0.9048 | 0.7182 |
+| Decision Tree | 0.9326 | 0.9737 | 0.9590 | 0.9344 | 0.9465 | 0.8558 |
+| KNN | 0.8895 | 0.9576 | 0.9074 | 0.9210 | 0.9142 | 0.7591 |
 | Naive Bayes | 0.5052 | 0.6669 | 0.9996 | 0.2258 | 0.3684 | 0.3083 |
+| Random Forest (Ensemble) | 0.9315 | 0.9872 | 0.9293 | 0.9663 | 0.9474 | 0.8505 |
+| XGBoost (Ensemble) | 0.9383 | 0.9891 | 0.9540 | 0.9493 | 0.9516 | 0.8666 |
 
-From the results, the ensemble models performed the best overall. Both Random Forest and XGBoost achieved strong performance across most metrics.
+---
 
-Among all models, **XGBoost achieved the highest MCC and AUC while maintaining a good balance between precision and recall.** Decision Tree also performed well, but the ensemble versions were more consistent.
+## 5️⃣ Model Performance Observations 📈
 
-Naive Bayes struggled on this dataset, particularly in recall and MCC, indicating that it was not well-suited for this feature space.
-
-Based on these results, **XGBoost was selected as the final model for deployment.**
+| ML Model Name | Observation about model performance |
+|---------------|-------------------------------------|
+| Logistic Regression | High recall but lower precision. Works as a good linear baseline but underperforms compared to ensemble methods. |
+| Decision Tree | Strong precision and balanced performance. Performs well on structured data but can overfit. |
+| KNN | Moderate performance. Sensitive to high dimensionality and computationally heavier than other models. |
+| Naive Bayes | Very high precision but very poor recall. Misses many attack cases due to independence assumptions. |
+| Random Forest (Ensemble) | Strong recall and F1 score. Provides stable ensemble performance. |
+| XGBoost (Ensemble) | Best overall performer with highest MCC and AUC. Maintains a strong balance between precision and recall. |
 
 ---
 
@@ -121,63 +93,27 @@ Based on these results, **XGBoost was selected as the final model for deployment
 | **Actual Normal** | 17,092 | 1,508 |
 | **Actual Attack** | 1,670 | 31,265 |
 
-From the confusion matrix, the model correctly identifies a large number of attack samples while keeping false negatives relatively low.
-
-Since missing attacks (false negatives) can be critical in intrusion detection, this balance between precision and recall makes XGBoost suitable for deployment.
+XGBoost was selected for deployment based on its overall balanced performance across evaluation metrics.
 
 ---
 
-## 7️⃣ Model Performance Observations 📈
+## 7️⃣ Streamlit Deployment 🌐
 
-| Model | Observation |
-|--------|-------------|
-| Logistic Regression | High recall (0.9579) but lower precision (0.8570), leading to more false positives. Serves as a solid linear baseline but underperforms compared to ensemble methods. |
-| Decision Tree | High precision (0.9590) with balanced performance. Performs well on structured tabular data but can overfit. |
-| KNN | Moderate performance. Sensitive to high dimensionality after one-hot encoding and computationally expensive. |
-| Naive Bayes | Extremely high precision (0.9996) but very poor recall (0.2258). Misses many attack cases due to strong independence assumptions. |
-| Random Forest | Excellent recall (0.9663) and strong F1 score. Provides stable ensemble performance. |
-| XGBoost | Best overall performer with highest MCC (0.8666) and AUC (0.9891). Strong balance between precision and recall. |
+Live App:  
+https://unsw-nb15-intrusion-detection.streamlit.app/
 
----
+The Streamlit app includes:
 
-## 8️⃣ Saved Model Files 💾
-
-All trained models were saved as `.pkl` files inside the `model/` directory.
-
-| File | Size |
-|-------|-------|
-| xgboost.pkl | 0.30 MB |
-| random_forest.pkl | 3.84 MB |
-| decision_tree.pkl | 0.43 MB |
-| knn.pkl | 21.41 MB |
-| logistic_regression.pkl | 0.01 MB |
-| naive_bayes.pkl | 0.01 MB |
-
-The KNN file is larger because it stores training samples internally, whereas models like Logistic Regression and Naive Bayes store only learned parameters.
-
----
-
-## 9️⃣ Streamlit Web Application 🌐
-
-A Streamlit application was built and deployed for interactive testing.
-
-**Streamlit Link:**  
-[UNSW-NB15 Intrusion Detection](https://unsw-nb15-intrusion-detection.streamlit.app/)
-
-### Features
-
+- CSV dataset upload option  
 - Model selection dropdown  
-- Upload custom test CSV file  
-- Automatic evaluation metric computation  
+- Automatic evaluation metric display  
 - Confusion matrix visualization  
 - ROC curve visualization  
 - Downloadable sample test dataset  
 
-Users can upload a CSV file containing a `label` column to evaluate performance instantly.
-
 ---
 
-## 🔟 Repository Structure 📂
+## 8️⃣ Repository Structure 📂
 
 ```
 UNSW-NB15-Intrusion-Detection/
@@ -198,7 +134,7 @@ UNSW-NB15-Intrusion-Detection/
 
 ---
 
-## 1️⃣1️⃣ Requirements ⚙️
+## 9️⃣ Requirements ⚙️
 
 Main dependencies:
 
@@ -215,3 +151,6 @@ To install locally:
 
 ```
 pip install -r requirements.txt
+```
+
+---
