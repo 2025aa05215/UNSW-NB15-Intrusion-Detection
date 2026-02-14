@@ -91,14 +91,8 @@ if uploaded_file is not None:
         # Load selected model
         model = joblib.load(os.path.join(MODEL_PATH, model_files[selected_model_name]))
 
-        # Naive Bayes
-        if selected_model_name == "Naive Bayes":
-            X_test_processed = model["preprocessor"].transform(X_test)
-            y_pred = model["model"].predict(X_test_processed.toarray())
-            y_proba = model["model"].predict_proba(X_test_processed.toarray())[:, 1]
-        else:
-            y_pred = model.predict(X_test)
-            y_proba = model.predict_proba(X_test)[:, 1]
+        y_pred = model.predict(X_test)
+        y_proba = model.predict_proba(X_test)[:, 1]
 
         # Compute metrics
         acc = accuracy_score(y_test, y_pred)
