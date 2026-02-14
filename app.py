@@ -90,6 +90,10 @@ if uploaded_file is not None:
 
         # Load selected model
         model = joblib.load(os.path.join(MODEL_PATH, model_files[selected_model_name]))
+        if selected_model_name == "KNN":
+            st.write("Expected features:", model.named_steps["classifier"].n_features_in_)
+            transformed = model.named_steps["preprocessor"].transform(X_test)
+            st.write("Transformed features:", transformed.shape[1])
 
         y_pred = model.predict(X_test)
         y_proba = model.predict_proba(X_test)[:, 1]
