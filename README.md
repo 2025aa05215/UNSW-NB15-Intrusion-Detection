@@ -33,7 +33,7 @@ For this assignment, six different classification models were trained on the sam
 ## 2️⃣ Dataset Information
 
 **Dataset Name:** UNSW-NB15  
-**Dataset Link:** https://www.kaggle.com/datasets/dhoogla/unswnb15  
+**Dataset Link:** [**Kaggle**](https://www.kaggle.com/datasets/dhoogla/unswnb15/)
 **Total Samples:** 257,673  
 **Total Features:** 35 (after removing the multi-class column)
 
@@ -162,7 +162,7 @@ The KNN file is larger because it stores training samples internally, whereas mo
 A Streamlit application was built and deployed for interactive testing.
 
 **Streamlit Link:**  
-https://unsw-nb15-intrusion-detection.streamlit.app/
+[UNSW-NB15 Intrusion Detection](https://unsw-nb15-intrusion-detection.streamlit.app/)
 
 ### Features
 
